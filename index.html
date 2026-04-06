@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dyego Cantu | Design Organizacional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Chosen Palette: Warm Neutrals & Sage Green (Background: #F9F9F6, Text: #2C3E50, Accent: #4A7C59) -->
+    <!-- Application Structure Plan: The SPA is structured as a vertical, interactive narrative. 1. Hero: Introduces the core value proposition. 2. Convergence (The Thesis): Uses interactive cards to break down the complex idea of continuous transformation into 3 digestible pillars. 3. Core Services: A tabbed interface to organize the 3 main services, keeping the layout clean while offering deep dives. 4. The Regenerative Difference: Uses a Radar chart to visually contrast the traditional consulting approach with the regenerative approach, making abstract concepts quantifiable. 5. Experience: A filterable grid to show sector adaptability. This structure guides the user from the "Why" (Thesis) to the "How" (Services) to the "Proof" (Difference & Experience). -->
+    <!-- Visualization & Content Choices: 1. Thesis Convergence: Interactive HTML/CSS cards -> Goal: Inform/Organize -> Justification: Breaks down text-heavy thesis into explorable chunks. 2. Services Tabs: HTML/JS Tabs -> Goal: Organize -> Justification: Prevents cognitive overload by hiding text until requested. 3. Regenerative vs Traditional: Chart.js Radar Chart -> Goal: Compare -> Justification: The best way to show multi-dimensional qualitative differences (short-term vs systemic) in a single view. 4. Experience Filter: JS filtered grid -> Goal: Organize -> Justification: Allows prospects to quickly find relevant industry experience. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9F9F6;
+            color: #2C3E50;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        .tab-active {
+            border-bottom: 4px solid #4A7C59;
+            color: #4A7C59;
+            font-weight: 600;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(44, 62, 80, 0.1);
+            border-color: #4A7C59;
+        }
+
+        .hidden-content {
+            display: none;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stonebg: '#F9F9F6',
+                        slatedark: '#2C3E50',
+                        sage: '#4A7C59',
+                        terracotta: '#D9734E'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased selection:bg-sage selection:text-white">
+
+    <nav class="fixed w-full bg-stonebg/90 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-bold text-xl tracking-tight text-slatedark">DYEGO<span class="text-sage">CANTU</span></div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#tese" class="hover:text-sage transition-colors">A Tese</a>
+                <a href="#servicos" class="hover:text-sage transition-colors">Serviços</a>
+                <a href="#diferencial" class="hover:text-sage transition-colors">Abordagem Regenerativa</a>
+                <a href="#experiencia" class="hover:text-sage transition-colors">Experiência</a>
+            </div>
+            <a href="#contato" class="px-5 py-2 bg-slatedark text-white text-sm font-semibold rounded-full hover:bg-sage transition-colors">Vamos Conversar</a>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-20 px-6 max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+        <div class="flex-1">
+            <div class="inline-block px-4 py-1 mb-6 border border-sage text-sage font-semibold text-sm rounded-full bg-sage/10">
+                Business Agility & Futuros Regenerativos
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+                Design Organizacional para <span class="text-transparent bg-clip-text bg-gradient-to-r from-sage to-terracotta">Inovação Transformativa</span>
+            </h1>
+            <p class="text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl">
+                O mercado não vive mais "ciclos de mudança", mas um estado de transformação contínua. Ajudo organizações a transitar da agilidade mecânica para a agilidade regenerativa.
+            </p>
+            <div class="flex gap-4">
+                <a href="#diferencial" class="px-8 py-3 bg-sage text-white font-semibold rounded-full hover:bg-opacity-90 transition-all shadow-lg shadow-sage/30">Descubra o Diferencial</a>
+            </div>
+        </div>
+        <div class="flex-1 w-full flex justify-center relative">
+            <div class="w-72 h-72 rounded-full border-4 border-dashed border-sage/30 animate-[spin_60s_linear_infinite] absolute"></div>
+            <div class="w-56 h-56 rounded-full bg-slatedark text-white flex flex-col items-center justify-center relative z-10 shadow-2xl p-6 text-center">
+                <span class="text-4xl mb-2">✦</span>
+                <span class="font-bold text-lg leading-tight">Inovação<br>Transformativa</span>
+            </div>
+        </div>
+    </header>
+
+    <section id="tese" class="py-20 bg-white px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-12 max-w-3xl">
+                <h2 class="text-3xl font-bold mb-4">A Tese: Prosperar na Complexidade</h2>
+                <p class="text-lg text-gray-600">
+                    Nesta seção, exploramos o desafio central das organizações modernas. A lógica rígida do século XX gera esgotamento e obsolescência. Clique nos pilares abaixo para entender a convergência crítica necessária para a sobrevivência e prosperidade no cenário atual.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="p-8 rounded-2xl border border-gray-100 bg-stonebg card-hover cursor-pointer" onclick="toggleTese('resultado')">
+                    <div class="text-3xl text-terracotta mb-4">📈</div>
+                    <h3 class="text-xl font-bold mb-2">Resultados de Negócio</h3>
+                    <p class="text-gray-600 text-sm mb-4">Eficiência, previsibilidade e time-to-market.</p>
+                    <div id="desc-resultado" class="hidden-content text-sm text-gray-800 border-t border-gray-200 pt-4 mt-4">
+                        Otimização de fluxos de valor para garantir que a inovação chegue ao mercado de forma rápida e sustentável, sem desperdícios operacionais.
+                    </div>
+                </div>
+
+                <div class="p-8 rounded-2xl border border-gray-100 bg-stonebg card-hover cursor-pointer" onclick="toggleTese('humano')">
+                    <div class="text-3xl text-sage mb-4">🧠</div>
+                    <h3 class="text-xl font-bold mb-2">Sustentabilidade Humana</h3>
+                    <p class="text-gray-600 text-sm mb-4">Saúde mental, bem-estar e conformidade (NR-1).</p>
+                    <div id="desc-humano" class="hidden-content text-sm text-gray-800 border-t border-gray-200 pt-4 mt-4">
+                        Adequação estratégica às exigências de Gerenciamento de Riscos Psicossociais. O cuidado com o capital humano deixou de ser opcional e tornou-se pilar de governança.
+                    </div>
+                </div>
+
+                <div class="p-8 rounded-2xl border border-gray-100 bg-stonebg card-hover cursor-pointer" onclick="toggleTese('regenerativo')">
+                    <div class="text-3xl text-slatedark mb-4">🔄</div>
+                    <h3 class="text-xl font-bold mb-2">Abordagem Regenerativa</h3>
+                    <p class="text-gray-600 text-sm mb-4">Sistemas que geram mais vida para todos.</p>
+                    <div id="desc-regenerativo" class="hidden-content text-sm text-gray-800 border-t border-gray-200 pt-4 mt-4">
+                        Impacto multi-stakeholder. Desafiar o status quo para criar ecossistemas que não apenas extraem valor, mas potenciam e regeneram as pessoas e o negócio.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicos" class="py-20 px-6 bg-stonebg">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-12 max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-4">Core Services</h2>
+                <p class="text-lg text-gray-600">
+                    Aqui você pode explorar os três pilares de atuação prática da consultoria. Selecione as abas abaixo para detalhar como implemento a inovação transformativa através do Design Organizacional, Business Agility e DHO.
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <div class="flex w-full md:w-auto overflow-x-auto border-b border-gray-300 mb-8 pb-1 no-scrollbar">
+                    <button class="tab-btn tab-active px-6 py-3 text-lg whitespace-nowrap transition-colors" onclick="switchTab('design')">⚙️ Design Organizacional</button>
+                    <button class="tab-btn text-gray-500 hover:text-sage px-6 py-3 text-lg whitespace-nowrap transition-colors" onclick="switchTab('agility')">🚀 Business Agility</button>
+                    <button class="tab-btn text-gray-500 hover:text-sage px-6 py-3 text-lg whitespace-nowrap transition-colors" onclick="switchTab('dho')">🌱 DHO & NR-1</button>
+                </div>
+
+                <div class="w-full max-w-4xl bg-white p-8 rounded-2xl shadow-sm border border-gray-100 min-h-[250px]">
+                    <div id="content-design" class="tab-content block animate-[fadeIn_0.5s_ease-in-out]">
+                        <h3 class="text-2xl font-bold mb-4 text-slatedark">Design Organizacional & Governança</h3>
+                        <p class="text-gray-600 mb-6 text-lg">Estruturação de modelos de gestão preparados para a complexidade. Saímos da hierarquia estática para redes vivas e funcionais.</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-sage mr-3 mt-1 text-xl">✓</span>
+                                <div>
+                                    <strong class="block text-slatedark">Hacking Cultural</strong>
+                                    <span class="text-gray-600">Intervenções precisas para desobstruir fluxos de valor e quebrar silos departamentais.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-sage mr-3 mt-1 text-xl">✓</span>
+                                <div>
+                                    <strong class="block text-slatedark">Estruturas Autônomas</strong>
+                                    <span class="text-gray-600">Desenho de estruturas organizacionais que suportam a autonomia e a tomada de decisão rápida e descentralizada.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="content-agility" class="tab-content hidden animate-[fadeIn_0.5s_ease-in-out]">
+                        <h3 class="text-2xl font-bold mb-4 text-slatedark">Business Agility (KCP)</h3>
+                        <p class="text-gray-600 mb-6 text-lg">Implementação de agilidade estratégica que vai muito além da TI, alcançando o RH, Marketing, Produto e Operações com o rigor do Kanban Coach Professional.</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-terracotta mr-3 mt-1 text-xl">✓</span>
+                                <div>
+                                    <strong class="block text-slatedark">Gestão de Fluxo Integrado</strong>
+                                    <span class="text-gray-600">Mapeamento, visualização e redução sistemática de desperdícios em toda a cadeia de valor.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-terracotta mr-3 mt-1 text-xl">✓</span>
+                                <div>
+                                    <strong class="block text-slatedark">Evolução Baseada em Evidências</strong>
+                                    <span class="text-gray-600">Cultura de melhoria contínua pautada em métricas reais (Lead Time, Throughput, Eficiência de Fluxo).</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="content-dho" class="tab-content hidden animate-[fadeIn_0.5s_ease-in-out]">
+                        <h3 class="text-2xl font-bold mb-4 text-slatedark">Desenvolvimento Humano-Organizacional</h3>
+                        <p class="text-gray-600 mb-6 text-lg">Integração da saúde mental como vantagem competitiva direta, criando ambientes onde a performance não custa o bem-estar.</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-sage mr-3 mt-1 text-xl">✓</span>
+                                <div>
+                                    <strong class="block text-slatedark">Adequação NR-1</strong>
+                                    <span class="text-gray-600">Atuação estratégica frente às novas exigências de Gerenciamento de Riscos Psicossociais.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-sage mr-3 mt-1 text-xl">✓</span>
+                                <div>
+                                    <strong class="block text-slatedark">Segurança Psicológica</strong>
+                                    <span class="text-gray-600">Promoção de ambientes regenerativos onde o erro é tratado como aprendizado e a inovação floresce.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="diferencial" class="py-20 bg-white px-6">
+        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+            <div class="flex-1">
+                <h2 class="text-3xl font-bold mb-4">O Olhar Regenerativo</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    Esta visualização compara o impacto da consultoria tradicional com a minha abordagem regenerativa. O gráfico demonstra como o uso da Teoria da Complexidade e da Ecosofia amplia simultaneamente a eficiência do negócio e a sustentabilidade humana, criando um ecossistema organizacional superior.
+                </p>
+                <div class="bg-stonebg p-6 rounded-xl border-l-4 border-sage">
+                    <h4 class="font-bold text-slatedark mb-2">Inovação Transformativa</h4>
+                    <p class="text-sm text-gray-600">
+                        Enquanto a consultoria tradicional foca em "extração", meu método garante que a inovação em processos e produtos não degrade o capital humano, mas o potencialize. É focar no que gera valor real para o sistema como um todo.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex-1 w-full">
+                <div class="chart-container">
+                    <canvas id="diferencialChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experiencia" class="py-20 px-6 bg-slatedark text-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-12 max-w-3xl">
+                <h2 class="text-3xl font-bold mb-4">Experiência Multi-setorial</h2>
+                <p class="text-lg text-gray-300">
+                    A complexidade não tem um único formato. Explore abaixo como adapto frameworks globais a contextos de alta pressão em diferentes setores do mercado. Utilize os botões para filtrar os cases.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap gap-3 mb-10">
+                <button class="filter-btn px-4 py-2 rounded-full border border-gray-500 hover:border-sage hover:text-sage transition-colors text-sm active-filter bg-white text-slatedark font-bold" onclick="filterClients('todos')">Todos</button>
+                <button class="filter-btn px-4 py-2 rounded-full border border-gray-500 hover:border-sage hover:text-sage transition-colors text-sm" onclick="filterClients('tech')">Tecnologia & Inovação</button>
+                <button class="filter-btn px-4 py-2 rounded-full border border-gray-500 hover:border-sage hover:text-sage transition-colors text-sm" onclick="filterClients('mkt')">Marketing</button>
+                <button class="filter-btn px-4 py-2 rounded-full border border-gray-500 hover:border-sage hover:text-sage transition-colors text-sm" onclick="filterClients('ind')">Indústria & Saúde</button>
+                <button class="filter-btn px-4 py-2 rounded-full border border-gray-500 hover:border-sage hover:text-sage transition-colors text-sm" onclick="filterClients('log')">Logística</button>
+                <button class="filter-btn px-4 py-2 rounded-full border border-gray-500 hover:border-sage hover:text-sage transition-colors text-sm" onclick="filterClients('soc')">Impacto Social</button>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="client-grid">
+                <div class="client-card tech p-6 rounded-xl bg-white/10 backdrop-blur border border-white/10 hover:border-sage/50 transition-colors">
+                    <span class="text-xs font-bold text-sage uppercase tracking-wider mb-2 block">Tecnologia & Inovação</span>
+                    <h3 class="text-xl font-bold mb-2">Cardus.ai</h3>
+                    <p class="text-gray-300 text-sm">IA aplicada à transformação organizacional e eficiência de processos.</p>
+                </div>
+                
+                <div class="client-card tech p-6 rounded-xl bg-white/10 backdrop-blur border border-white/10 hover:border-sage/50 transition-colors">
+                    <span class="text-xs font-bold text-sage uppercase tracking-wider mb-2 block">Tecnologia</span>
+                    <h3 class="text-xl font-bold mb-2">Softfocus</h3>
+                    <p class="text-gray-300 text-sm">Escalabilidade de engenharia de software e agilidade nos times de produto.</p>
+                </div>
+
+                <div class="client-card mkt p-6 rounded-xl bg-white/10 backdrop-blur border border-white/10 hover:border-sage/50 transition-colors">
+                    <span class="text-xs font-bold text-terracotta uppercase tracking-wider mb-2 block">Marketing & Performance</span>
+                    <h3 class="text-xl font-bold mb-2">V4 Company</h3>
+                    <p class="text-gray-300 text-sm">Gestão de fluxo e previsibilidade em ambiente de altíssimo crescimento e performance.</p>
+                </div>
+
+                <div class="client-card ind p-6 rounded-xl bg-white/10 backdrop-blur border border-white/10 hover:border-sage/50 transition-colors">
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-wider mb-2 block">Indústria & Saúde</span>
+                    <h3 class="text-xl font-bold mb-2">Sanofi</h3>
+                    <p class="text-gray-300 text-sm">Agilidade organizacional aplicada ao setor farmacêutico, equilibrando inovação e compliance rígido.</p>
+                </div>
+
+                <div class="client-card log p-6 rounded-xl bg-white/10 backdrop-blur border border-white/10 hover:border-sage/50 transition-colors">
+                    <span class="text-xs font-bold text-yellow-400 uppercase tracking-wider mb-2 block">Logística & Comex</span>
+                    <h3 class="text-xl font-bold mb-2">Navcargo</h3>
+                    <p class="text-gray-300 text-sm">Otimização de operações complexas de comércio exterior, garantindo fluidez e redução de gargalos.</p>
+                </div>
+
+                <div class="client-card soc p-6 rounded-xl bg-white/10 backdrop-blur border border-white/10 hover:border-sage/50 transition-colors">
+                    <span class="text-xs font-bold text-pink-400 uppercase tracking-wider mb-2 block">Impacto Social & Educação</span>
+                    <h3 class="text-xl font-bold mb-2">Aldeia da Fraternidade</h3>
+                    <p class="text-gray-300 text-sm">Design organizacional focado no impacto multi-stakeholder e eficiência na gestão do terceiro setor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contato" class="py-16 bg-stonebg border-t border-gray-200 px-6 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-slatedark">Vamos desenhar o próximo passo?</h2>
+            <p class="text-lg text-gray-600 mb-8">
+                Se sua organização busca resultados que não custem a saúde das pessoas, ou se você sente que a estrutura atual trava a inovação, a transformação começa com uma conversa.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
+                <a href="https://www.linkedin.com/in/dyegocantu/" class="px-8 py-3 bg-slatedark text-white font-semibold rounded-full hover:bg-sage transition-all w-full sm:w-auto">
+                    Conectar no LinkedIn
+                </a>
+                <a href="#" class="px-8 py-3 bg-white border-2 border-slatedark text-slatedark font-semibold rounded-full hover:bg-slatedark hover:text-white transition-all w-full sm:w-auto">
+                    Enviar E-mail
+                </a>
+            </div>
+            
+            <div class="text-sm text-gray-500 border-t border-gray-300 pt-8 italic">
+                "Construindo coletivamente os futuros que queremos habitar."<br>
+                <strong class="not-italic mt-2 block text-slatedark">Dyego Cantu - Org-Design para Inovação Transformativa</strong>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+    <script>
+        function toggleTese(id) {
+            const desc = document.getElementById('desc-' + id);
+            if (desc.classList.contains('hidden-content')) {
+                desc.classList.remove('hidden-content');
+                desc.classList.add('block', 'animate-[fadeIn_0.3s_ease-in-out]');
+            } else {
+                desc.classList.add('hidden-content');
+                desc.classList.remove('block', 'animate-[fadeIn_0.3s_ease-in-out]');
+            }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+            
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('tab-active');
+                el.classList.add('text-gray-500');
+            });
+            
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+            document.getElementById('content-' + tabId).classList.add('block');
+            
+            event.currentTarget.classList.add('tab-active');
+            event.currentTarget.classList.remove('text-gray-500');
+        }
+
+        const ctx = document.getElementById('diferencialChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    ['Resultados', 'Imediatos'], 
+                    ['Sustentabilidade', 'Humana (NR-1)'], 
+                    ['Visão', 'Sistêmica'], 
+                    ['Inovação', 'Contínua'],
+                    ['Agilidade', 'Adaptável']
+                ],
+                datasets: [{
+                    label: 'Consultoria Tradicional',
+                    data: [90, 30, 20, 40, 50],
+                    backgroundColor: 'rgba(44, 62, 80, 0.1)',
+                    borderColor: 'rgba(44, 62, 80, 0.5)',
+                    pointBackgroundColor: 'rgba(44, 62, 80, 1)',
+                    borderDash: [5, 5]
+                }, {
+                    label: 'Abordagem Regenerativa',
+                    data: [85, 95, 95, 90, 90],
+                    backgroundColor: 'rgba(74, 124, 89, 0.4)',
+                    borderColor: 'rgba(74, 124, 89, 1)',
+                    pointBackgroundColor: 'rgba(74, 124, 89, 1)',
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        pointLabels: {
+                            font: { family: "'Inter', sans-serif", size: 12, weight: '600' },
+                            color: '#2C3E50'
+                        },
+                        ticks: { display: false, min: 0, max: 100 }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { family: "'Inter', sans-serif" },
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#2C3E50',
+                        titleFont: { family: "'Inter', sans-serif", size: 14 },
+                        bodyFont: { family: "'Inter', sans-serif", size: 13 },
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: true
+                    }
+                }
+            }
+        });
+
+        function filterClients(category) {
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('bg-white', 'text-slatedark', 'font-bold');
+                btn.classList.add('text-gray-300');
+            });
+            
+            event.currentTarget.classList.add('bg-white', 'text-slatedark', 'font-bold');
+            event.currentTarget.classList.remove('text-gray-300');
+
+            const cards = document.querySelectorAll('.client-card');
+            cards.forEach(card => {
+                if (category === 'todos' || card.classList.contains(category)) {
+                    card.style.display = 'block';
+                    card.classList.add('animate-[fadeIn_0.4s_ease-in-out]');
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('animate-[fadeIn_0.4s_ease-in-out]');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
