@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Chosen Palette: Warm Neutrals & Sage Green (Background: #F9F9F6, Text: #2C3E50, Accent: #4A7C59) -->
-    <!-- Application Structure Plan: The SPA is structured as a vertical, interactive narrative. 1. Hero: Introduces the core value proposition. 2. Convergence (The Thesis): Uses interactive cards to break down the complex idea of continuous transformation into 3 digestible pillars. 3. Core Services: A tabbed interface to organize the 3 main services, keeping the layout clean while offering deep dives. 4. The Regenerative Difference: Uses a Radar chart to visually contrast the traditional consulting approach with the regenerative approach, making abstract concepts quantifiable. 5. Experience: A filterable grid to show sector adaptability. This structure guides the user from the "Why" (Thesis) to the "How" (Services) to the "Proof" (Difference & Experience). -->
+    <!-- Application Structure Plan: The SPA is structured as a vertical, interactive narrative. 1. Hero: Introduces the core value proposition. 2. Convergence (The Thesis): Uses interactive cards to break down the complex idea of continuous transformation into 3 digestible pillars. 3. Services: A tabbed interface to organize the 3 main services, keeping the layout clean while offering deep dives. 4. The Regenerative Difference: Uses a Radar chart to visually contrast the traditional consulting approach with the regenerative approach, making abstract concepts quantifiable. 5. Experience: A filterable grid to show sector adaptability. This structure guides the user from the "Why" (Thesis) to the "How" (Services) to the "Proof" (Difference & Experience). -->
     <!-- Visualization & Content Choices: 1. Thesis Convergence: Interactive HTML/CSS cards -> Goal: Inform/Organize -> Justification: Breaks down text-heavy thesis into explorable chunks. 2. Services Tabs: HTML/JS Tabs -> Goal: Organize -> Justification: Prevents cognitive overload by hiding text until requested. 3. Regenerative vs Traditional: Chart.js Radar Chart -> Goal: Compare -> Justification: The best way to show multi-dimensional qualitative differences (short-term vs systemic) in a single view. 4. Experience Filter: JS filtered grid -> Goal: Organize -> Justification: Allows prospects to quickly find relevant industry experience. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
@@ -155,7 +155,7 @@
     <section id="servicos" class="py-20 px-6 bg-stonebg">
         <div class="max-w-6xl mx-auto">
             <div class="mb-12 max-w-3xl mx-auto text-center">
-                <h2 class="text-3xl font-bold mb-4">Core Services</h2>
+                <h2 class="text-3xl font-bold mb-4">Serviços</h2>
                 <p class="text-lg text-gray-600">
                     Aqui você pode explorar os três pilares de atuação prática da consultoria. Selecione as abas abaixo para detalhar como implemento a inovação transformativa através do Design Organizacional, Business Agility e DHO & Liderança.
                 </p>
@@ -317,27 +317,25 @@
         </div>
     </section>
 
-    <footer id="contato" class="py-16 bg-stonebg border-t border-gray-200 px-6 text-center">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold mb-6 text-slatedark">Vamos desenhar o próximo passo?</h2>
-            <p class="text-lg text-gray-600 mb-8">
-                Se sua organização busca resultados que não custem a saúde das pessoas, ou se você sente que a estrutura atual trava a inovação, a transformação começa com uma conversa.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
-                <a href="https://www.linkedin.com/in/dyegocantu/" class="px-8 py-3 bg-slatedark text-white font-semibold rounded-full hover:bg-sage transition-all w-full sm:w-auto">
-                    Conectar no LinkedIn
-                </a>
-                <a href="#" class="px-8 py-3 bg-white border-2 border-slatedark text-slatedark font-semibold rounded-full hover:bg-slatedark hover:text-white transition-all w-full sm:w-auto">
-                    Enviar E-mail
-                </a>
-            </div>
-            
-            <div class="text-sm text-gray-500 border-t border-gray-300 pt-8 italic">
-                "Construindo coletivamente os futuros que queremos habitar."<br>
-                <strong class="not-italic mt-2 block text-slatedark">Dyego Cantu - Org-Design para Inovação Transformativa</strong>
-            </div>
-        </div>
-    </footer>
+	<footer id="contato" class="py-16 bg-stonebg border-t border-gray-200 px-6 text-center">
+	    <div class="max-w-3xl mx-auto">
+		<h2 class="text-3xl font-bold mb-6 text-slatedark">Vamos desenhar o próximo passo?</h2>
+		<p class="text-lg text-gray-600 mb-8">
+		    Se sua organização busca resultados que não custem a saúde das pessoas, ou se você sente que a estrutura atual trava a inovação, a transformação começa com uma conversa.
+		</p>
+		
+		<div class="flex justify-center items-center mb-12">
+		    <a href="https://wa.me/5546999004795" target="_blank" class="px-10 py-4 bg-sage text-white font-bold rounded-full hover:bg-slatedark transition-all shadow-lg shadow-sage/20 flex items-center gap-2">
+		        <span>Vamos conversar?</span>
+		    </a>
+		</div>
+		
+		<div class="text-sm text-gray-500 border-t border-gray-300 pt-8 italic">
+		    "Construindo coletivamente os futuros que queremos habitar."<br>
+		    <strong class="not-italic mt-2 block text-slatedark">Dyego Cantu - Org-Design para Inovação Transformativa</strong>
+		</div>
+	    </div>
+	</footer>
 
     <style>
         @keyframes fadeIn {
